@@ -59,3 +59,28 @@ function randomTeams() {
   drawPlayerOnes()
   drawPlayerTwos()
 }
+
+// Calculate skill
+
+function calculateSkill() {
+  let teamOne = filterPlayersByTeamNumber(1)
+  let teamOneCount = 0
+  let teamTwo = filterPlayersByTeamNumber(2)
+  let teamTwoCount = 0
+  teamOne.forEach((players) => {
+    teamOneCount += players.skill
+  })
+  teamTwo.forEach((players) => {
+    teamTwoCount += players.skill
+  })
+
+  console.log(`? count`, teamOneCount)
+  console.log('? count', teamTwoCount)
+}
+
+function filterPlayersByTeamNumber(surveyingTeam) {
+  let filteredPlayers = players.filter((player) => player.teamnumber == surveyingTeam)
+  console.log(`🥳`, filteredPlayers);
+  return filteredPlayers
+}
+

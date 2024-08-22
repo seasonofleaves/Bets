@@ -1,3 +1,16 @@
-.card-style {
+.hero-bg {
+  background-color: rgba(72, 0, 255, 0.219);
+}
+
+.team-card {
+  background-color: black;
+}
+
+.bank-card {
+  background-color: green;
+}
+
+.fd {
+  flex-direction: column;
   justify-content: center;
 }

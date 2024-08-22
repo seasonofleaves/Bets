@@ -1,9 +1,7 @@
 let bank = 100
 
-const teams = [`1`, `2`]
 
-const teamOneElm = document.getElementById(`team-one`)
-const teamTwoElm = document.getElementById(`team-two`)
+const teams = [`1`, `2`]
 
 const players = [
   { teamnumber: 1, emoji: `🐅`, skill: 100, name: `Tiger` },
@@ -19,6 +17,13 @@ const players = [
   { teamnumber: 2, emoji: `🐸`, skill: 10, name: `Frog` },
   { teamnumber: 2, emoji: `👽`, skill: 100, name: `Alien` },
 ]
+
+const teamOneElm = document.getElementById(`team-one`)
+const teamTwoElm = document.getElementById(`team-two`)
+
+let bankAmount = document.getElementById('bank')
+
+const betAmounts = [5, 25, 100, bank]
 
 // Draw players
 
@@ -61,12 +66,14 @@ function randomTeams() {
 }
 
 // Calculate skill
+let teamTwoCount = 0
+let teamOneCount = 0
 
 function calculateSkill() {
   let teamOne = filterPlayersByTeamNumber(1)
-  let teamOneCount = 0
+  teamOneCount = 0
   let teamTwo = filterPlayersByTeamNumber(2)
-  let teamTwoCount = 0
+  teamTwoCount = 0
   teamOne.forEach((players) => {
     teamOneCount += players.skill
   })
@@ -74,13 +81,67 @@ function calculateSkill() {
     teamTwoCount += players.skill
   })
 
-  console.log(`? count`, teamOneCount)
-  console.log('? count', teamTwoCount)
+  console.log(`? count`, teamOneCount);
+  console.log('? count', teamTwoCount);
+
+  if (teamOneCount > teamTwoCount) {
+    console.log(`Team One Won!`);
+    return
+  }
+
+  if (teamTwoCount > teamOneCount) {
+    console.log('Team Two Won!');
+    return
+  }
+
 }
 
 function filterPlayersByTeamNumber(surveyingTeam) {
   let filteredPlayers = players.filter((player) => player.teamnumber == surveyingTeam)
   console.log(`🥳`, filteredPlayers);
   return filteredPlayers
+}
+
+function placeBetOne(selectedItemName) {
+  console.log(`betting on team 1`, selectedItemName)
+  calculateSkill()
+  console.log(`test`, teamOneCount)
+  if (teamOneCount > teamTwoCount) {
+    console.log(`You Won!`);
+    bank += selectedItemName * 2
+    console.log(`working`, bank)
+
+  }
+
+  if (teamTwoCount > teamOneCount) {
+    console.log('You Lost!');
+    bank -= selectedItemName
+    console.log(`working`, bank)
+
+  }
+  bankAmount.innerText = bank
+
+}
+
+function placeBetTwo(selectedItemName) {
+  console.log(`betting on team 2`, selectedItemName)
+  calculateSkill()
+  console.log(`test`, teamTwoCount)
+  if (teamOneCount > teamTwoCount) {
+    console.log(`You Lost`);
+    bank -= selectedItemName
+    console.log(`working`, bank)
+
+
+  }
+
+  if (teamTwoCount > teamOneCount) {
+    console.log('You Won!');
+    bank += selectedItemName * 2
+    console.log(`working`, bank)
+
+  }
+  bankAmount.innerText = bank
+
 }
 
